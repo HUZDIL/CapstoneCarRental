@@ -70,7 +70,14 @@ public class UserController {
     }
 
 
-
+    @DeleteMapping("/user/{id}/auth")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Map<String, Boolean>> deleteUser(@PathVariable Long id){
+        userService.removeById(id);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("success", true);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 
     @PutMapping("/user/{id}/auth")
     @PreAuthorize("hasRole('ADMIN')")
